@@ -7,8 +7,84 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TCG Price Calculator</title>
 </head>
-<body>
+<body class="min-h-screen bg-gradient-to-br from-blue-700 via-yellow-400 to-red-500 flex items-center justify-center">
 
+<div class="container mx-auto" x-data="app()">
+    <div class="shadow-lg max-w-xl mx-auto bg-white/90 backdrop-blur-lg" x-init="calculate()">
+        <header class="flex flex-col items-center bg-white/80 border-b border-yellow-400 pt-6 px-6 pb-4">
+            <h1 class="text-2xl font-bold text-blue-900 mb-2">TCG Price Calculator</h1>
+            <p class="text-md text-slate-700">How many Boosters does everyone get?</p>
+        </header>
+        <main class="flex flex-col gap-8 p-6">
+            <form class="flex gap-4 items-center" x-on:change="calculate()" @submit.prevent>
+                <label class="text-base" for="players">Amount of Players</label>
+                <div class="flex items-center gap-2">
+                    <button
+                            @click="removePlayer()"
+                            type="button"
+                            class="flex items-center justify-center w-10 h-10 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-bold text-xl rounded-full shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                            :disabled="players <= 2">
+                        −
+                    </button>
+                    <input id="players" name="players" type="number"
+                           class="w-24 mx-2 text-center text-xl border-2 border-blue-900 rounded-xl py-2"
+                           x-model="players"
+                           @keydown.enter="$event.target.blur()">
+                    <button
+                            @click="addPlayer()"
+                            type="button"
+                            class="flex items-center justify-center w-10 h-10 bg-green-500 hover:bg-green-600 active:bg-green-700 text-white font-bold text-xl rounded-full shadow-md hover:shadow-lg transition-all duration-200">
+                        +
+                    </button>
+                </div>
+            </form>
+
+            <div class="flex flex-col gap-4 items-center">
+                <h2 class="text-xl font-semibold text-blue-900 mb-2">Ergebnis</h2>
+                <div class="text-base text-slate-900">
+                    <span class="font-semibold">Gesamtbooster:</span>
+                    <span x-text="boosterTotal"></span>
+                    <span class="ml-2 font-semibold">Displays:</span>
+                    <span x-text="displaysFull"></span>
+                    <span>volle Displays</span>
+                    <template x-if="boostersInPartDisplay > 0">
+                        <span>
+                          <span class="ml-2 font-semibold">+ Booster aus angefangenem:</span>
+                          <span x-text="boostersInPartDisplay"></span>
+                        </span>
+                    </template>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center gap-2 mt-6">
+                <h3 class="text-lg font-bold text-black mb-3">Preisverteilung</h3>
+                <div class="flex flex-wrap justify-center gap-4 w-full">
+                    <template x-for="player in prices" :key="player.rank">
+                        <!--                        <div :class="rechteckKlasse(spieler.rang, prices.length)"-->
+                        <div
+                                class="flex flex-col items-center justify-center rounded-lg shadow-md transition-all duration-300 w-16 h-20 font-bold text-lg select-none">
+                            <span class="text-xs font-medium">Platz</span>
+                            <span class="text-xs font-medium" x-text="player.rank"></span>
+                            <span class="text-2xl font-extrabold mt-1" x-text="player.boosters"></span>
+                            <span class="text-xs mt-1">Booster</span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </main>
+
+        <footer class="flex flex-col items-center mt-6 py-4 bg-white/80 border-t border-yellow-400">
+            <p class="text-sm text-slate-600 text-center">
+                Examples: 8 Spieler → 24 Booster → 1 Display<br/>
+                23 Spieler → 69 Booster → 2 Displays + 21 Booster
+            </p>
+            <p class="text-xs text-slate-500 mt-2 text-center">
+                Made for One Piece TCG Tournaments in <a href="https://www.twomoons.ch/events/one-piece-events/">Two
+                Moons</a> · Made with ♥️ for Päde · 2025
+            </p>
+        </footer>
+    </div>
+</div>
 <script type="module" src="/src/main.js"></script>
 </body>
 </html>
