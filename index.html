@@ -17,9 +17,6 @@
 
         <!-- Compact Header -->
         <header class="bg-gradient-to-r from-orange-400 to-amber-400 text-white px-6 py-6 text-center">
-            <div class="mb-3">
-                <span class="text-2xl">🎴</span>
-            </div>
             <h1 class="text-xl font-bold mb-1">TCG Prize Calculator</h1>
             <p class="text-white/90 text-sm">How many boosters?</p>
         </header>
@@ -33,7 +30,10 @@
                 <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-4 border border-orange-100">
                     <form class="space-y-4" x-on:change="calculate()" @submit.prevent>
                         <div class="text-center">
-                            <h2 class="text-lg font-bold text-gray-800 mb-1">👥 Players</h2>
+                            <div class="flex items-center justify-center gap-2 mb-1">
+                                <img src="/icons/users.svg" alt="Players" class="w-5 h-5 text-gray-800">
+                                <h2 class="text-lg font-bold text-gray-800">Players</h2>
+                            </div>
                             <p class="text-gray-600 text-sm">How many people?</p>
                         </div>
                         <div class="flex items-center justify-center gap-4">
@@ -65,13 +65,16 @@
                 <!-- Compact Results -->
                 <div class="space-y-4">
                     <div class="text-center">
-                        <h2 class="text-lg font-bold text-gray-800 mb-2">📊 Results</h2>
+                        <div class="flex items-center justify-center gap-2 mb-2">
+                            <img src="/icons/chart-pie.svg" alt="Results" class="w-5 h-5 text-gray-800">
+                            <h2 class="text-lg font-bold text-gray-800">Results</h2>
+                        </div>
                     </div>
                     <div class="grid grid-cols-3 gap-3">
                         <!-- Total boosters -->
                         <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-4 shadow-sm border border-purple-100">
                             <div class="text-center">
-                                <div class="text-2xl mb-1">📦</div>
+                                <img src="/icons/swatch.svg" alt="Total" class="w-6 h-6 mx-auto mb-1 text-purple-600">
                                 <div class="text-purple-600 text-xs font-semibold uppercase mb-1">Total</div>
                                 <div class="text-xl font-bold text-purple-800" x-text="boosterTotal"></div>
                             </div>
@@ -80,7 +83,7 @@
                         <!-- Displays -->
                         <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 shadow-sm border border-blue-100">
                             <div class="text-center">
-                                <div class="text-2xl mb-1">📚</div>
+                                <img src="/icons/gift-top.svg" alt="Displays" class="w-6 h-6 mx-auto mb-1 text-blue-600">
                                 <div class="text-blue-600 text-xs font-semibold uppercase mb-1">Displays</div>
                                 <div class="text-xl font-bold text-blue-800" x-text="displaysFull"></div>
                             </div>
@@ -89,7 +92,7 @@
                         <!-- Remaining -->
                         <div class="bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl p-4 shadow-sm border border-amber-100" x-show="boostersInPartDisplay > 0">
                             <div class="text-center">
-                                <div class="text-2xl mb-1">📄</div>
+                                <img src="/icons/tag.svg" alt="Extra" class="w-6 h-6 mx-auto mb-1 text-amber-600">
                                 <div class="text-amber-600 text-xs font-semibold uppercase mb-1">Extra</div>
                                 <div class="text-xl font-bold text-amber-800" x-text="boostersInPartDisplay"></div>
                             </div>
@@ -101,23 +104,22 @@
             <!-- Mobile-Optimized Prize Distribution - Full Width in Landscape -->
             <div class="space-y-4">
                 <div class="text-center">
-                    <h3 class="text-lg font-bold text-gray-800 mb-1">🏆 Prize Distribution</h3>
+                    <div class="flex items-center justify-center gap-2 mb-1">
+                        <img src="/icons/cake.svg" alt="Prize Distribution" class="w-5 h-5 text-gray-800">
+                        <h3 class="text-lg font-bold text-gray-800">Prize Distribution</h3>
+                    </div>
                 </div>
                 <div class="grid grid-cols-6 landscape:grid-cols-10 gap-1">
                     <template x-for="player in prices" :key="player.rank">
                         <div class="bg-gradient-to-b from-white to-orange-50 rounded-lg p-2 shadow-sm border border-orange-100 hover:border-orange-300 hover:shadow-md active:scale-95 transition-all duration-200">
                             <!-- Ultra compact badge -->
                             <div class="flex items-center justify-center w-5 h-5 mx-auto mb-1 bg-gradient-to-r from-orange-300 to-amber-400 text-white text-xs font-bold rounded-full">
-                                <span x-show="player.rank === 1" class="text-xs">🥇</span>
-                                <span x-show="player.rank === 2" class="text-xs">🥈</span>
-                                <span x-show="player.rank === 3" class="text-xs">🥉</span>
-                                <span x-show="player.rank > 3" x-text="player.rank" class="text-xs leading-none"></span>
+                                <span x-text="player.rank" class="text-xs leading-none"></span>
                             </div>
 
                             <!-- Ultra compact booster count -->
                             <div class="text-center">
-                                <div class="text-sm font-bold text-gray-800" x-text="player.boosters"></div>
-                                <div class="text-xs text-gray-500 font-medium">P</div>
+                                <div class="text-lg font-bold text-gray-800" x-text="player.boosters"></div>
                             </div>
                         </div>
                     </template>
@@ -137,7 +139,7 @@
                 </div>
                 <p class="text-xs text-gray-400">
                     Made for One Piece TCG at <a href="https://www.twomoons.ch/events/one-piece-events/" class="text-orange-600 font-medium">Two Moons</a><br/>
-                    ❤️ Made for Päde · 2025
+                    <img src="/icons/heart.svg" alt="Heart" class="inline w-4 h-4"> Made for Päde · 2025
                 </p>
             </div>
         </footer>
