@@ -1,12 +1,36 @@
 {
   "name": "tcg-price-calculator",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "A modern, responsive web application for calculating booster pack distribution in Trading Card Game tournaments",
   "type": "module",
+  "keywords": [
+    "tcg",
+    "trading-cards",
+    "tournament",
+    "calculator",
+    "one-piece",
+    "booster-packs"
+  ],
+  "author": {
+    "name": "ditshej",
+    "url": "https://ditshej.ch"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditshej/tcg-price-calculator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ditshej/tcg-price-calculator/issues"
+  },
+  "homepage": "https://github.com/ditshej/tcg-price-calculator#readme",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "echo 'No linting configured yet'",
+    "test": "echo 'No tests configured yet'"
   },
   "devDependencies": {
     "vite": "^7.1.2"
