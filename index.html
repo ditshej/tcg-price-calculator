@@ -2,18 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TCG Prize Calculator</title>
+    <!-- Modern Favicon Setup -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon-32x32.svg" sizes="32x32" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+    <meta name="theme-color" content="#f97316">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
     </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-rose-50 via-orange-50 to-amber-50 p-4">
 
 <div class="container mx-auto max-w-sm landscape:max-w-2xl" x-data="app()">
-    <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl shadow-orange-100/50 overflow-hidden" x-init="calculate()">
+    <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl shadow-orange-100/50 overflow-hidden"
+         x-init="calculate()">
 
         <!-- Compact Header -->
         <header class="bg-gradient-to-r from-orange-400 to-amber-400 text-white px-6 py-6 text-center">
@@ -38,10 +48,10 @@
                         </div>
                         <div class="flex items-center justify-center gap-4">
                             <button
-                                @click="removePlayer()"
-                                type="button"
-                                class="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-rose-400 to-pink-500 hover:from-rose-500 hover:to-pink-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
-                                :disabled="players <= 1">
+                                    @click="removePlayer()"
+                                    type="button"
+                                    class="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-rose-400 to-pink-500 hover:from-rose-500 hover:to-pink-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+                                    :disabled="players <= 1">
                                 −
                             </button>
 
@@ -53,9 +63,9 @@
                             </div>
 
                             <button
-                                @click="addPlayer()"
-                                type="button"
-                                class="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-emerald-400 to-green-500 hover:from-emerald-500 hover:to-green-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200">
+                                    @click="addPlayer()"
+                                    type="button"
+                                    class="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-emerald-400 to-green-500 hover:from-emerald-500 hover:to-green-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200">
                                 +
                             </button>
                         </div>
@@ -83,14 +93,16 @@
                         <!-- Displays -->
                         <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 shadow-sm border border-blue-100">
                             <div class="text-center">
-                                <img src="/icons/gift-top.svg" alt="Displays" class="w-6 h-6 mx-auto mb-1 text-blue-600">
+                                <img src="/icons/gift-top.svg" alt="Displays"
+                                     class="w-6 h-6 mx-auto mb-1 text-blue-600">
                                 <div class="text-blue-600 text-xs font-semibold uppercase mb-1">Displays</div>
                                 <div class="text-xl font-bold text-blue-800" x-text="displaysFull"></div>
                             </div>
                         </div>
 
                         <!-- Remaining -->
-                        <div class="bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl p-4 shadow-sm border border-amber-100" x-show="boostersInPartDisplay > 0">
+                        <div class="bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl p-4 shadow-sm border border-amber-100"
+                             x-show="boostersInPartDisplay > 0">
                             <div class="text-center">
                                 <img src="/icons/tag.svg" alt="Extra" class="w-6 h-6 mx-auto mb-1 text-amber-600">
                                 <div class="text-amber-600 text-xs font-semibold uppercase mb-1">Extra</div>
@@ -138,8 +150,11 @@
                     </p>
                 </div>
                 <p class="text-xs text-gray-400">
-                    Made for One Piece TCG at <a href="https://www.twomoons.ch/events/one-piece-events/" class="text-orange-600 font-medium">Two Moons</a><br/>
-                    <img src="/icons/heart.svg" alt="Heart" class="inline w-4 h-4"> Made for Päde · 2025 · by <a href="https://ditshej.ch" class="text-orange-600 font-medium">ditshej</a>
+                    Made for One Piece TCG at <a href="https://www.twomoons.ch/events/one-piece-events/"
+                                                 class="text-orange-600 font-medium">Two Moons</a><br/>
+                    <img src="/icons/heart.svg" alt="Heart" class="inline w-4 h-4"> Made for Päde · 2025 · by <a
+                        href="https://ditshej.ch" class="text-orange-600 font-medium">ditshej</a> | <a
+                        href="https://github.com/ditshej/tcg-price-calculator" class="text-orange-600 font-medium">Github</a>
                 </p>
             </div>
         </footer>
