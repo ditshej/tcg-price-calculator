@@ -16,7 +16,7 @@ A modern, responsive web application for calculating booster pack distribution i
 
 ## Demo
 
-Visit the live demo: [TCG Prize Calculator](https://your-demo-url.com) *(replace with actual URL)*
+Visit (and use, if you want) the live demo: [TCG Prize Calculator](https://ditshej.ch/price-calc/)
 
 ## Installation
 
