@@ -17,6 +17,16 @@
         body {
             font-family: 'Inter', sans-serif;
         }
+        /* Remove number input spinners for Chrome, Safari, Edge */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        /* Remove number input spinners for Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
     </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-rose-50 via-orange-50 to-amber-50 p-4">
@@ -46,18 +56,17 @@
                             </div>
                             <p class="text-gray-600 text-sm">How many people?</p>
                         </div>
-                        <div class="flex items-center justify-center gap-4">
+                        <div class="flex items-center justify-center gap-3 md:gap-2">
                             <button
                                     @click="removePlayer()"
                                     type="button"
-                                    class="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-rose-400 to-pink-500 hover:from-rose-500 hover:to-pink-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+                                    class="flex items-center justify-center w-12 h-12 md:w-20 md:h-12 bg-gradient-to-br from-rose-400 to-pink-500 hover:from-rose-500 hover:to-pink-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
                                     :disabled="players <= 2">
                                 −
                             </button>
-
-                            <div class="bg-white rounded-xl shadow-md px-4 py-3 border border-orange-100 min-w-20">
+                            <div class="bg-white rounded-xl shadow-md px-2 py-2 md:px-1 border border-orange-100 min-w-12 md:min-w-8">
                                 <input id="players" name="players" type="number"
-                                       class="w-full text-center text-2xl font-bold text-gray-800 bg-transparent border-none outline-none"
+                                       class="w-full text-center text-xl font-bold text-gray-800 bg-transparent border-none outline-none"
                                        x-model="players"
                                        @keydown.enter="$event.target.blur()" min="1">
                             </div>
@@ -65,7 +74,7 @@
                             <button
                                     @click="addPlayer()"
                                     type="button"
-                                    class="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-emerald-400 to-green-500 hover:from-emerald-500 hover:to-green-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200">
+                                    class="flex items-center justify-center w-12 h-12 md:w-20 md:h-12 bg-gradient-to-br from-emerald-400 to-green-500 hover:from-emerald-500 hover:to-green-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200">
                                 +
                             </button>
                         </div>
@@ -82,19 +91,19 @@
                             </div>
                             <p class="text-gray-600 text-sm">Booster per Participant</p>
                         </div>
-                        <div class="flex items-center justify-center gap-4">
+                        <div class="flex items-center justify-center gap-3 md:gap-2">
                             <button
                                     @click="removeBoostersPerPlayerInPricepool()"
                                     type="button"
-                                    class="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-rose-400 to-pink-500 hover:from-rose-500 hover:to-pink-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+                                    class="flex items-center justify-center w-12 h-12 md:w-20 md:h-12 bg-gradient-to-br from-rose-400 to-pink-500 hover:from-rose-500 hover:to-pink-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
                                     :disabled="boostersPerPlayerInPricepool <= 1">
                                 −
                             </button>
 
-                            <div class="bg-white rounded-xl shadow-md px-4 py-3 border border-orange-100 min-w-20">
+                            <div class="bg-white rounded-xl shadow-md px-2 py-2 md:px-1 border border-orange-100 min-w-12 md:min-w-8">
                                 <input id="boostersPerPlayerInPricepool" name="boostersPerPlayerInPricepool"
                                        type="number"
-                                       class="w-full text-center text-2xl font-bold text-gray-800 bg-transparent border-none outline-none"
+                                       class="w-full text-center text-xl font-bold text-gray-800 bg-transparent border-none outline-none"
                                        x-model="boostersPerPlayerInPricepool"
                                        @keydown.enter="$event.target.blur()" min="1">
                             </div>
@@ -102,7 +111,7 @@
                             <button
                                     @click="addBoostersPerPlayerInPricepool()"
                                     type="button"
-                                    class="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-emerald-400 to-green-500 hover:from-emerald-500 hover:to-green-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200">
+                                    class="flex items-center justify-center w-12 h-12 md:w-20 md:h-12 bg-gradient-to-br from-emerald-400 to-green-500 hover:from-emerald-500 hover:to-green-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200">
                                 +
                             </button>
                         </div>
@@ -119,17 +128,16 @@
                             </div>
                             <p class="text-gray-600 text-sm">Boosters in Display</p>
                         </div>
-                        <div class="flex items-center justify-center gap-4">
+                        <div class="flex items-center justify-center gap-3 md:gap-2">
                             <button
                                     @click="removeDisplaySize()"
                                     type="button"
-                                    class="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-rose-400 to-pink-500 hover:from-rose-500 hover:to-pink-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed">
+                                    class="flex items-center justify-center w-12 h-12 md:w-20 md:h-12 bg-gradient-to-br from-rose-400 to-pink-500 hover:from-rose-500 hover:to-pink-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed">
                                 −
                             </button>
-
-                            <div class="bg-white rounded-xl shadow-md px-4 py-3 border border-orange-100 min-w-20">
+                            <div class="bg-white rounded-xl shadow-md px-2 py-2 md:px-1 border border-orange-100 min-w-12 md:min-w-8">
                                 <input id="displaySize" name="displaySize" type="number"
-                                       class="w-full text-center text-2xl font-bold text-gray-800 bg-transparent border-none outline-none"
+                                       class="w-full text-center text-xl font-bold text-gray-800 bg-transparent border-none outline-none"
                                        x-model="displaySize"
                                        @keydown.enter="$event.target.blur()" min="1">
                             </div>
@@ -137,7 +145,7 @@
                             <button
                                     @click="addDisplaySize()"
                                     type="button"
-                                    class="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-emerald-400 to-green-500 hover:from-emerald-500 hover:to-green-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200">
+                                    class="flex items-center justify-center w-12 h-12 md:w-20 md:h-12 bg-gradient-to-br from-emerald-400 to-green-500 hover:from-emerald-500 hover:to-green-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200">
                                 +
                             </button>
                         </div>
@@ -153,7 +161,7 @@
                 <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-4 border border-orange-100">
                     <div class="text-center mb-2">
                         <div class="flex items-center justify-center gap-2 mb-1">
-                            <img src="/icons/chart-pie.svg" alt="Distribution Curve" class="w-5 h-5 text-gray-800">
+                            <img src="/icons/chart-bar.svg" alt="Distribution Curve" class="w-5 h-5 text-gray-800">
                             <h2 class="text-lg font-bold text-gray-800">Distribution Curve</h2>
                         </div>
                         <p class="text-gray-600 text-sm">Adjust how steep the prize curve is</p>
@@ -288,13 +296,6 @@
         <!-- Compact Footer -->
         <footer class="bg-gradient-to-r from-orange-50 to-amber-50 px-6 py-4 border-t border-orange-100">
             <div class="text-center space-y-3">
-                <div class="bg-white/80 rounded-lg p-3 shadow-sm border border-orange-100">
-                    <p class="text-gray-700 text-xs leading-relaxed">
-                        <span class="font-semibold">Examples:</span><br/>
-                        <span class="inline-block mt-1 text-xs">8 Players = 24 Boosters = 1 Display</span><br/>
-                        <span class="inline-block text-xs">23 Players = 69 Boosters = 2 Displays + 21</span>
-                    </p>
-                </div>
                 <p class="text-xs text-gray-400">
                     Made for One Piece and other TCGs at <a href="https://www.twomoons.ch/events/one-piece-events/"
                                                             class="text-orange-600 font-medium">Two Moons</a><br/>
