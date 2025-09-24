@@ -56,7 +56,8 @@
                             </button>
 
                             <div class="bg-white rounded-xl shadow-md px-4 py-3 border border-orange-100 min-w-20">
-                                <input id="boostersPerPlayerInPricepool" name="boostersPerPlayerInPricepool" type="number"
+                                <input id="boostersPerPlayerInPricepool" name="boostersPerPlayerInPricepool"
+                                       type="number"
                                        class="w-full text-center text-2xl font-bold text-gray-800 bg-transparent border-none outline-none"
                                        x-model="boostersPerPlayerInPricepool"
                                        @keydown.enter="$event.target.blur()" min="1">
@@ -89,14 +90,15 @@
                                 <template x-for="(option, idx) in distributionCurveOptions" :key="'top-'+idx">
                                     <div class="flex flex-col items-center w-1/6">
                                         <span class="mb-1 block min-h-[1.1em] text-[10px] whitespace-nowrap"
-                                            :class="[
+                                              :class="[
                                                 (idx === 0 && distributionCurveExponent === distributionCurveOptions[0].value) ? 'text-orange-600 font-bold' : '',
                                                 (idx === 2 && distributionCurveExponent === distributionCurveOptions[2].value) ? 'text-orange-600 font-bold' : '',
                                                 (idx === 4 && distributionCurveExponent === distributionCurveOptions[4].value) ? 'text-orange-600 font-bold' : ''
                                             ]"
-                                            x-text="idx === 0 ? distributionCurveOptions[0].label : idx === 2 ? distributionCurveOptions[2].label : idx === 4 ? distributionCurveOptions[4].label : ''"></span>
+                                              x-text="idx === 0 ? distributionCurveOptions[0].label : idx === 2 ? distributionCurveOptions[2].label : idx === 4 ? distributionCurveOptions[4].label : ''"></span>
                                         <span class="h-2 flex items-center justify-center">
-                                            <span :class="idx === 0 ? (distributionCurveOptions[0].value === distributionCurveExponent ? 'bg-orange-500' : 'bg-orange-200') : idx === 2 ? (distributionCurveOptions[2].value === distributionCurveExponent ? 'bg-orange-500' : 'bg-orange-200') : idx === 4 ? (distributionCurveOptions[4].value === distributionCurveExponent ? 'bg-orange-500' : 'bg-orange-200') : 'invisible'" class="block w-2 h-2 rounded-full transition-all"></span>
+                                            <span :class="idx === 0 ? (distributionCurveOptions[0].value === distributionCurveExponent ? 'bg-orange-500' : 'bg-orange-200') : idx === 2 ? (distributionCurveOptions[2].value === distributionCurveExponent ? 'bg-orange-500' : 'bg-orange-200') : idx === 4 ? (distributionCurveOptions[4].value === distributionCurveExponent ? 'bg-orange-500' : 'bg-orange-200') : 'invisible'"
+                                                  class="block w-2 h-2 rounded-full transition-all"></span>
                                         </span>
                                     </div>
                                 </template>
@@ -104,14 +106,14 @@
                             <!-- Slider: 90% width, centered -->
                             <div class="w-full flex justify-center">
                                 <input
-                                    type="range"
-                                    min="0"
-                                    :max="distributionCurveOptions.length - 1"
-                                    step="1"
-                                    :value="distributionCurveOptions.findIndex(o => o.value === distributionCurveExponent)"
-                                    @input="setDistributionCurveExponent(distributionCurveOptions[$event.target.value].value)"
-                                    class="w-[90%] accent-orange-400 h-2 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-300 mt-2 mb-2 bg-gradient-to-r from-orange-400 via-amber-400 to-orange-500"
-                                    aria-label="Distribution Curve"
+                                        type="range"
+                                        min="0"
+                                        :max="distributionCurveOptions.length - 1"
+                                        step="1"
+                                        :value="distributionCurveOptions.findIndex(o => o.value === distributionCurveExponent)"
+                                        @input="setDistributionCurveExponent(distributionCurveOptions[$event.target.value].value)"
+                                        class="w-[90%] accent-orange-400 h-2 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-300 mt-2 mb-2 bg-gradient-to-r from-orange-400 via-amber-400 to-orange-500"
+                                        aria-label="Distribution Curve"
                                 >
                             </div>
                             <!-- Bottom row: Balanced, Steep, Extreme (1,3,5) -->
@@ -119,15 +121,16 @@
                                 <template x-for="(option, idx) in distributionCurveOptions" :key="'bottom-'+idx">
                                     <div class="flex flex-col items-center w-1/6">
                                         <span class="h-2 flex items-center justify-center">
-                                            <span :class="idx === 1 ? (distributionCurveOptions[1].value === distributionCurveExponent ? 'bg-orange-500' : 'bg-orange-200') : idx === 3 ? (distributionCurveOptions[3].value === distributionCurveExponent ? 'bg-orange-500' : 'bg-orange-200') : idx === 5 ? (distributionCurveOptions[5].value === distributionCurveExponent ? 'bg-orange-500' : 'bg-orange-200') : 'invisible'" class="block w-2 h-2 rounded-full transition-all"></span>
+                                            <span :class="idx === 1 ? (distributionCurveOptions[1].value === distributionCurveExponent ? 'bg-orange-500' : 'bg-orange-200') : idx === 3 ? (distributionCurveOptions[3].value === distributionCurveExponent ? 'bg-orange-500' : 'bg-orange-200') : idx === 5 ? (distributionCurveOptions[5].value === distributionCurveExponent ? 'bg-orange-500' : 'bg-orange-200') : 'invisible'"
+                                                  class="block w-2 h-2 rounded-full transition-all"></span>
                                         </span>
                                         <span class="mt-1 block min-h-[1.1em] text-[10px] whitespace-nowrap"
-                                            :class="[
+                                              :class="[
                                                 (idx === 1 && distributionCurveExponent === distributionCurveOptions[1].value) ? 'text-orange-600 font-bold' : '',
                                                 (idx === 3 && distributionCurveExponent === distributionCurveOptions[3].value) ? 'text-orange-600 font-bold' : '',
                                                 (idx === 5 && distributionCurveExponent === distributionCurveOptions[5].value) ? 'text-orange-600 font-bold' : ''
                                             ]"
-                                            x-text="idx === 1 ? distributionCurveOptions[1].label : idx === 3 ? distributionCurveOptions[3].label : idx === 5 ? distributionCurveOptions[5].label : ''"></span>
+                                              x-text="idx === 1 ? distributionCurveOptions[1].label : idx === 3 ? distributionCurveOptions[3].label : idx === 5 ? distributionCurveOptions[5].label : ''"></span>
                                     </div>
                                 </template>
                             </div>
@@ -258,7 +261,7 @@
                 </div>
                 <p class="text-xs text-gray-400">
                     Made for One Piece and other TCGs at <a href="https://www.twomoons.ch/events/one-piece-events/"
-                                                 class="text-orange-600 font-medium">Two Moons</a><br/>
+                                                            class="text-orange-600 font-medium">Two Moons</a><br/>
                     <img src="/icons/heart.svg" alt="Heart" class="inline w-4 h-4"> Made for Päde · 2025 · by <a
                         href="https://ditshej.ch" class="text-orange-600 font-medium">ditshej</a> | <a
                         href="https://github.com/ditshej/tcg-price-calculator" class="text-orange-600 font-medium">Github</a>

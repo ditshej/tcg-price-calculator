@@ -8,12 +8,12 @@ export function createAppAlpineData() {
         prices: [],
         distributionCurveExponent: 1,
         distributionCurveOptions: [
-            { value: 0.5, label: "Flat" },
-            { value: 1, label: "Balanced" },
-            { value: 2, label: "Standard" },
-            { value: 5, label: "Steep" },
-            { value: 10, label: "Very Steep" },
-            { value: 20, label: "Extreme" }
+            {value: 0.5, label: "Flat"},
+            {value: 1, label: "Balanced"},
+            {value: 2, label: "Standard"},
+            {value: 5, label: "Steep"},
+            {value: 10, label: "Very Steep"},
+            {value: 20, label: "Extreme"}
         ],
         addPlayer() {
             this.players++;
@@ -25,11 +25,11 @@ export function createAppAlpineData() {
             }
             this.calculate()
         },
-        addBoostersPerPlayerInPricepool(){
+        addBoostersPerPlayerInPricepool() {
             this.boostersPerPlayerInPricepool++;
             this.calculate()
         },
-        removeBoostersPerPlayerInPricepool(){
+        removeBoostersPerPlayerInPricepool() {
             if (this.boostersPerPlayerInPricepool > 1) {
                 this.boostersPerPlayerInPricepool--;
             }
@@ -75,7 +75,7 @@ export function createAppAlpineData() {
             for (let i = 0; i < playersCount; i++) {
                 const additionalBoosters = Math.floor(boostersToFillUp * weights[i] / weightsSum);
                 const boosters = 1 + additionalBoosters;
-                distribution.push({ rank: i + 1, boosters: boosters });
+                distribution.push({rank: i + 1, boosters: boosters});
                 distributedBoosters += boosters;
             }
 
