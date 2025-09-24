@@ -16,6 +16,16 @@ export function createAppAlpineData() {
             }
             this.calculate()
         },
+        addBoostersPerPlayerInPricepool(){
+            this.boostersPerPlayerInPricepool++;
+            this.calculate()
+        },
+        removeBoostersPerPlayerInPricepool(){
+            if (this.boostersPerPlayerInPricepool > 1) {
+                this.boostersPerPlayerInPricepool--;
+            }
+            this.calculate()
+        },
         calculate() {
             this.boosterTotal = this.players * this.boostersPerPlayerInPricepool;
             this.displaysFull = Math.floor(this.boosterTotal / 24);

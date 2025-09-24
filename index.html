@@ -36,6 +36,47 @@
             <!-- Responsive Layout: Stacked in Portrait, Side-by-side in Landscape -->
             <div class="space-y-6 landscape:grid landscape:grid-cols-2 landscape:gap-6 landscape:space-y-0">
 
+                <!-- Booster per Participant Input - Mobile Optimized -->
+                <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-4 border border-orange-100">
+                    <form class="space-y-4" x-on:change="calculate()" @submit.prevent>
+                        <div class="text-center">
+                            <div class="flex items-center justify-center gap-2 mb-1">
+                                <img src="/icons/swatch.svg" alt="Pricepool" class="w-5 h-5 text-gray-800">
+                                <h2 class="text-lg font-bold text-gray-800">Pricepool</h2>
+                            </div>
+                            <p class="text-gray-600 text-sm">Booster per Participant</p>
+                        </div>
+                        <div class="flex items-center justify-center gap-4">
+                            <button
+                                    @click="removeBoostersPerPlayerInPricepool()"
+                                    type="button"
+                                    class="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-rose-400 to-pink-500 hover:from-rose-500 hover:to-pink-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+                                    :disabled="boostersPerPlayerInPricepool <= 1">
+                                −
+                            </button>
+
+                            <div class="bg-white rounded-xl shadow-md px-4 py-3 border border-orange-100 min-w-20">
+                                <input id="boostersPerPlayerInPricepool" name="boostersPerPlayerInPricepool" type="number"
+                                       class="w-full text-center text-2xl font-bold text-gray-800 bg-transparent border-none outline-none"
+                                       x-model="boostersPerPlayerInPricepool"
+                                       @keydown.enter="$event.target.blur()" min="1">
+                            </div>
+
+                            <button
+                                    @click="addBoostersPerPlayerInPricepool()"
+                                    type="button"
+                                    class="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-emerald-400 to-green-500 hover:from-emerald-500 hover:to-green-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200">
+                                +
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Responsive Layout: Stacked in Portrait, Side-by-side in Landscape -->
+            <div class="space-y-6 landscape:grid landscape:grid-cols-2 landscape:gap-6 landscape:space-y-0">
+
                 <!-- Player Input - Mobile Optimized -->
                 <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-4 border border-orange-100">
                     <form class="space-y-4" x-on:change="calculate()" @submit.prevent>
@@ -51,7 +92,7 @@
                                     @click="removePlayer()"
                                     type="button"
                                     class="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-rose-400 to-pink-500 hover:from-rose-500 hover:to-pink-600 active:scale-95 text-white font-bold text-xl rounded-full shadow-lg transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
-                                    :disabled="players <= 1">
+                                    :disabled="players <= 2">
                                 −
                             </button>
 
