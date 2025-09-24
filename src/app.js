@@ -2,6 +2,7 @@ export function createAppAlpineData() {
     return {
         players: 21,
         boostersPerPlayerInPricepool: 3,
+        displaySize: 24,
         boosterTotal: 0,
         displaysFull: 0,
         boostersInPartDisplay: 0,
@@ -29,6 +30,16 @@ export function createAppAlpineData() {
             this.boostersPerPlayerInPricepool++;
             this.calculate()
         },
+        addDisplaySize() {
+            this.displaySize++;
+            this.calculate();
+        },
+        removeDisplaySize() {
+            if (this.displaySize > 1) {
+                this.displaySize--;
+                this.calculate();
+            }
+        },
         removeBoostersPerPlayerInPricepool() {
             if (this.boostersPerPlayerInPricepool > 1) {
                 this.boostersPerPlayerInPricepool--;
@@ -41,8 +52,8 @@ export function createAppAlpineData() {
         },
         calculate() {
             this.boosterTotal = this.players * this.boostersPerPlayerInPricepool;
-            this.displaysFull = Math.floor(this.boosterTotal / 24);
-            this.boostersInPartDisplay = this.boosterTotal % 24;
+            this.displaysFull = Math.floor(this.boosterTotal / this.displaySize);
+            this.boostersInPartDisplay = this.boosterTotal % this.displaySize;
 
             this.prices = this.calculatePrices()
         },
