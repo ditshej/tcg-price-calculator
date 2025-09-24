@@ -6,14 +6,14 @@ export function createAppAlpineData() {
         displaysFull: 0,
         boostersInPartDisplay: 0,
         prices: [],
-        distributionCurveExponent: 0.7, // New variable for curve control
+        distributionCurveExponent: 1,
         distributionCurveOptions: [
-            { value: 0.3, label: "Flat" },
-            { value: 0.5, label: "Balanced" },
-            { value: 0.7, label: "Standard" },
-            { value: 1.0, label: "Steep" },
-            { value: 1.2, label: "Very Steep" },
-            { value: 1.5, label: "Extreme" }
+            { value: 0.5, label: "Flat" },
+            { value: 1, label: "Balanced" },
+            { value: 2, label: "Standard" },
+            { value: 5, label: "Steep" },
+            { value: 10, label: "Very Steep" },
+            { value: 20, label: "Extreme" }
         ],
         addPlayer() {
             this.players++;
