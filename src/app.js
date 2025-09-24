@@ -6,6 +6,15 @@ export function createAppAlpineData() {
         displaysFull: 0,
         boostersInPartDisplay: 0,
         prices: [],
+        distributionCurveExponent: 0.7, // New variable for curve control
+        distributionCurveOptions: [
+            { value: 0.3, label: "Flat" },
+            { value: 0.5, label: "Balanced" },
+            { value: 0.7, label: "Standard" },
+            { value: 1.0, label: "Steep" },
+            { value: 1.2, label: "Very Steep" },
+            { value: 1.5, label: "Extreme" }
+        ],
         addPlayer() {
             this.players++;
             this.calculate()
@@ -26,6 +35,10 @@ export function createAppAlpineData() {
             }
             this.calculate()
         },
+        setDistributionCurveExponent(value) {
+            this.distributionCurveExponent = value;
+            this.calculate();
+        },
         calculate() {
             this.boosterTotal = this.players * this.boostersPerPlayerInPricepool;
             this.displaysFull = Math.floor(this.boosterTotal / 24);
@@ -45,12 +58,12 @@ export function createAppAlpineData() {
                 return [];
             }
 
-            // calculate weights for flat curve
+            // calculate weights for curve
             const weights = [];
             let weightsSum = 0;
 
             for (let i = 1; i <= playersCount; i++) {
-                const weight = Math.pow(playersCount - i + 1, 0.7);
+                const weight = Math.pow(playersCount - i + 1, this.distributionCurveExponent);
                 weights.push(weight);
                 weightsSum += weight;
             }
