@@ -154,6 +154,22 @@
 
             </div>
 
+            <!-- Winner gets full display checkbox -->
+            <div class="flex items-center gap-2 mt-2 mb-4">
+                <input type="checkbox"
+                       id="winnerGetsDisplay"
+                       :checked="winnerGetsDisplay"
+                       :disabled="!canWinnerGetDisplay()"
+                       @change="toggleWinnerGetsDisplay()"
+                       class="accent-orange-500 w-5 h-5 rounded border border-orange-300 disabled:opacity-40 disabled:cursor-not-allowed">
+                <label for="winnerGetsDisplay" class="text-sm text-gray-700 select-none">
+                    Winner gets a full display
+                </label>
+                <template x-if="!canWinnerGetDisplay()">
+                    <span class="ml-2 text-xs text-gray-400">(not enough boosters)</span>
+                </template>
+            </div>
+
             <!-- Responsive Layout: Stacked in Portrait, Side-by-side in Landscape -->
             <div class="space-y-6 landscape:grid landscape:grid-cols-2 landscape:gap-6 landscape:space-y-0">
 
@@ -221,7 +237,12 @@
                         </div>
                         <div class="text-xs text-gray-700 mt-1">
                             <span class="font-semibold">Current:</span>
-                            <span x-text="distributionCurveExponent"></span>
+                            <template x-if="!editingExponent">
+                                <span x-text="distributionCurveExponent" class="cursor-pointer underline decoration-dotted decoration-orange-400 hover:text-orange-600" @click="startEditingExponent()"></span>
+                            </template>
+                            <template x-if="editingExponent">
+                                <input type="number" step="0.01" min="0.01" x-model="tempExponent" @keydown.enter="finishEditingExponent()" @blur="finishEditingExponent()" class="w-16 px-1 py-0.5 border border-orange-300 rounded text-center focus:ring-2 focus:ring-orange-200">
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -275,6 +296,11 @@
                         <h3 class="text-lg font-bold text-gray-800">Prize Distribution</h3>
                     </div>
                 </div>
+                <template x-if="undistributedBoosters > 0">
+                    <div class="text-center text-xs text-orange-600 font-semibold mb-2">
+                        <span x-text="undistributedBoosters"></span> booster(s) could not be distributed due to the display cap.
+                    </div>
+                </template>
                 <div class="grid grid-cols-6 landscape:grid-cols-10 gap-1">
                     <template x-for="player in prices" :key="player.rank">
                         <div class="bg-gradient-to-b from-white to-orange-50 rounded-lg p-2 shadow-sm border border-orange-100 hover:border-orange-300 hover:shadow-md active:scale-95 transition-all duration-200">
