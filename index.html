@@ -298,11 +298,6 @@
                         <h3 class="text-lg font-bold text-gray-800">Prize Distribution</h3>
                     </div>
                 </div>
-                <template x-if="undistributedBoosters > 0">
-                    <div class="text-center text-xs text-orange-600 font-semibold mb-2">
-                        <span x-text="undistributedBoosters"></span> booster(s) could not be distributed due to the display cap.
-                    </div>
-                </template>
                 <div class="grid grid-cols-6 landscape:grid-cols-10 gap-1">
                     <template x-for="player in prices" :key="player.rank">
                         <div class="bg-gradient-to-b from-white to-orange-50 rounded-lg p-2 shadow-sm border border-orange-100 hover:border-orange-300 hover:shadow-md active:scale-95 transition-all duration-200">
