@@ -20,44 +20,6 @@ export function createAppAlpineData() {
         editingExponent: false,
         tempExponent: '',
         undistributedBoosters: 0,
-        distributionCurve(playersCount, boosterCount, exponent, maxPerPlayer = null) {
-            if (playersCount <= 0 || boosterCount <= 0) return [];
-            // Everyone gets at least 1 booster
-            let base = Math.min(boosterCount, playersCount);
-            let boostersToDistribute = boosterCount - base;
-            // Calculate weights
-            const weights = [];
-            let weightsSum = 0;
-            for (let i = 1; i <= playersCount; i++) {
-                const weight = Math.pow(playersCount - i + 1, exponent);
-                weights.push(weight);
-                weightsSum += weight;
-            }
-            // Initial distribution
-            const distribution = [];
-            let distributed = 0;
-            for (let i = 0; i < playersCount; i++) {
-                let add = boostersToDistribute > 0 ? Math.floor(boostersToDistribute * weights[i] / weightsSum) : 0;
-                let total = 1 + add;
-                if (maxPerPlayer !== null) total = Math.min(total, maxPerPlayer);
-                distribution.push({rank: i + 1, boosters: total});
-                distributed += total;
-            }
-            // Distribute remaining boosters (due to rounding)
-            let left = boosterCount - distributed;
-            let idx = 0;
-            while (left > 0) {
-                if (maxPerPlayer === null || distribution[idx].boosters < maxPerPlayer) {
-                    distribution[idx].boosters++;
-                    left--;
-                }
-                idx++;
-                if (idx >= playersCount) idx = 0;
-                // If no one can take more, break (to avoid infinite loop)
-                if (maxPerPlayer !== null && !distribution.some(p => p.boosters < maxPerPlayer)) break;
-            }
-            return distribution;
-        },
         addPlayer() {
             this.players++;
             this.calculate()
@@ -121,6 +83,9 @@ export function createAppAlpineData() {
             if (!this.canWinnerGetDisplay()) {
                 this.winnerGetsDisplay = false;
             }
+            this.calculatePricepool();
+        },
+        calculatePricepool() {
             let prices = [];
             let boostersLeft = this.boosterTotal;
             let playerCount = this.players;
@@ -159,6 +124,44 @@ export function createAppAlpineData() {
             // Calculate undistributed boosters
             const distributed = this.prices.reduce((sum, p) => sum + p.boosters, 0);
             this.undistributedBoosters = Math.max(0, this.boosterTotal - distributed);
+        },
+        distributionCurve(playersCount, boosterCount, exponent, maxPerPlayer = null) {
+            if (playersCount <= 0 || boosterCount <= 0) return [];
+            // Everyone gets at least 1 booster
+            let base = Math.min(boosterCount, playersCount);
+            let boostersToDistribute = boosterCount - base;
+            // Calculate weights
+            const weights = [];
+            let weightsSum = 0;
+            for (let i = 1; i <= playersCount; i++) {
+                const weight = Math.pow(playersCount - i + 1, exponent);
+                weights.push(weight);
+                weightsSum += weight;
+            }
+            // Initial distribution
+            const distribution = [];
+            let distributed = 0;
+            for (let i = 0; i < playersCount; i++) {
+                let add = boostersToDistribute > 0 ? Math.floor(boostersToDistribute * weights[i] / weightsSum) : 0;
+                let total = 1 + add;
+                if (maxPerPlayer !== null) total = Math.min(total, maxPerPlayer);
+                distribution.push({rank: i + 1, boosters: total});
+                distributed += total;
+            }
+            // Distribute remaining boosters (due to rounding)
+            let left = boosterCount - distributed;
+            let idx = 0;
+            while (left > 0) {
+                if (maxPerPlayer === null || distribution[idx].boosters < maxPerPlayer) {
+                    distribution[idx].boosters++;
+                    left--;
+                }
+                idx++;
+                if (idx >= playersCount) idx = 0;
+                // If no one can take more, break (to avoid infinite loop)
+                if (maxPerPlayer !== null && !distribution.some(p => p.boosters < maxPerPlayer)) break;
+            }
+            return distribution;
         },
     }
 }
