@@ -7,9 +7,6 @@ export function createAppAlpineData() {
         boosterTotal: 0,
         displaysFull: 0,
         boostersInPartDisplay: 0,
-        prices: {},
-        boostersLeft: 0,
-        rankAlreadyAssigned: 0,
         distributionCurveExponent: 1,
         distributionCurveOptions: [
             {value: 0.5, label: "Flat"},
@@ -19,9 +16,12 @@ export function createAppAlpineData() {
             {value: 10, label: "Very Steep"},
             {value: 20, label: "Extreme"}
         ],
-        winnerGetsDisplay: false,
         editingExponent: false,
         tempExponent: '',
+        winnerGetsDisplay: false,
+        prices: {},
+        boostersLeft: 0,
+        rankAlreadyAssigned: 0,
         addPlayer() {
             this.players++;
             this.calculate()
@@ -57,8 +57,11 @@ export function createAppAlpineData() {
             this.winnerGetsDisplay = this.winnerGetsDisplay && this.canWinnerGetDisplay();
             this.calculate();
         },
+        assignableDisplays(boostersLeft) {
+            return Math.floor(boostersLeft / this.displaySize)
+        },
         canWinnerGetDisplay() {
-            return this.boosterTotal >= this.displaySize;
+            return this.assignableDisplays(this.boosterTotal - this.players * this.minParticipantBoosterPrice) !== 0;
         },
         toggleWinnerGetsDisplay() {
             if (this.canWinnerGetDisplay()) {
@@ -89,7 +92,9 @@ export function createAppAlpineData() {
         },
         calculatePricepool() {
             this.prices = {};
+            this.rankAlreadyAssigned = 0;
             this.boostersLeft = this.boosterTotal;
+
             this.assignMinParticipantBooster();
             if (this.winnerGetsDisplay) {
                 this.assignDisplaysIfPossible();
@@ -104,7 +109,7 @@ export function createAppAlpineData() {
             }
         },
         assignDisplaysIfPossible() {
-            let displaysAssignable = Math.floor(this.boostersLeft / this.displaySize);
+            let displaysAssignable = this.assignableDisplays(this.boostersLeft);
             for (let rank = 1; rank <= displaysAssignable; rank++) {
                 let alreadyAssigned = this.prices[rank] ? this.prices[rank].boosters : 0;
                 this.prices[rank] = {rank: rank, boosters: this.displaySize};
