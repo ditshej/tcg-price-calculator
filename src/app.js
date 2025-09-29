@@ -7,7 +7,9 @@ export function createAppAlpineData() {
         boosterTotal: 0,
         displaysFull: 0,
         boostersInPartDisplay: 0,
-        prices: [],
+        prices: {},
+        boostersLeft: 0,
+        rankAlreadyAssigned: 0,
         distributionCurveExponent: 1,
         distributionCurveOptions: [
             {value: 0.5, label: "Flat"},
@@ -86,83 +88,79 @@ export function createAppAlpineData() {
             this.calculatePricepool();
         },
         calculatePricepool() {
-            let boostersLeft = this.boosterTotal;
-            let rankAlreadyAssigned = 0;
-            console.log(this.prices);
-            this.assignMinParticipantBooster(boostersLeft);
-            console.log(this.prices);
+            this.prices = {};
+            this.boostersLeft = this.boosterTotal;
+            this.assignMinParticipantBooster();
             if (this.winnerGetsDisplay) {
-                this.assignDisplaysIfPossible(boostersLeft, rankAlreadyAssigned);
+                this.assignDisplaysIfPossible();
             }
-            this.assignNextRankTwoBoosters(boostersLeft, rankAlreadyAssigned);
-            this.distributeBoostersByCurve(boostersLeft, rankAlreadyAssigned)
-
+            this.assignNextRankTwoBoosters();
+            this.distributeBoostersByCurve()
         },
-        assignMinParticipantBooster(boostersLeft) {
+        assignMinParticipantBooster() {
             for (let rank = 1; rank <= this.players; rank++) {
                 this.prices[rank] = {rank: rank, boosters: this.minParticipantBoosterPrice};
-                boostersLeft--;
+                this.boostersLeft--;
             }
         },
-        assignDisplaysIfPossible(boostersLeft, rankAlreadyAssigned) {
-            let displaysAssignable = Math.floor(boostersLeft / this.displaySize);
+        assignDisplaysIfPossible() {
+            let displaysAssignable = Math.floor(this.boostersLeft / this.displaySize);
             for (let rank = 1; rank <= displaysAssignable; rank++) {
                 let alreadyAssigned = this.prices[rank] ? this.prices[rank].boosters : 0;
                 this.prices[rank] = {rank: rank, boosters: this.displaySize};
-                boostersLeft -= (this.displaySize - alreadyAssigned);
-                rankAlreadyAssigned = rank;
+                this.boostersLeft -= (this.displaySize - alreadyAssigned);
+                this.rankAlreadyAssigned = rank;
             }
         },
-        assignNextRankTwoBoosters(boostersLeft, rankAlreadyAssigned) {
-            if (boostersLeft === 0) return;
+        assignNextRankTwoBoosters() {
+            if (this.boostersLeft === 0) return;
 
             let boostersToAssign = 2;
-            if (boostersLeft === 1) {
+            if (this.boostersLeft === 1) {
                 boostersToAssign = 1;
             }
-            let boostersAssigned = this.prices[rankAlreadyAssigned + 1] ? this.prices[rankAlreadyAssigned + 1].boosters : 0;
-            this.prices[rankAlreadyAssigned + 1] = {
-                rank: rankAlreadyAssigned + 1,
+            let boostersAssigned = this.prices[this.rankAlreadyAssigned + 1] ? this.prices[this.rankAlreadyAssigned + 1].boosters : 0;
+            this.prices[this.rankAlreadyAssigned + 1] = {
+                rank: this.rankAlreadyAssigned + 1,
                 boosters: boostersAssigned + boostersToAssign
             };
-            boostersLeft -= boostersToAssign;
+            this.boostersLeft -= boostersToAssign;
         },
-        distributeBoostersByCurve(boostersLeft, rankAlreadyAssigned) {
-            if (boostersLeft === 0) return;
-
-            let playersCount = this.players - rankAlreadyAssigned;
+        distributeBoostersByCurve() {
+            if (this.boostersLeft === 0) return;
 
             // weights calculation
+            const numRanks = this.players - this.rankAlreadyAssigned;
             const weights = [];
             let weightsSum = 0;
-            for (let rank = rankAlreadyAssigned; rank <= this.players; rank++) {
-                const weight = Math.pow(rank - rankAlreadyAssigned + 1, this.distributionCurveExponent);
-                weights[rank] = weight;
+            for (let i = 0; i < numRanks; i++) {
+                const weight = Math.pow(numRanks - i, this.distributionCurveExponent);
+                weights[i] = weight;
                 weightsSum += weight;
             }
 
             // Initial distribution
-            const distribution = [];
-            let distributed = 0;
-            for (let rank = rankAlreadyAssigned + 1; rank <= this.players; rank++) {
-                let add = boostersLeft > 0 ? Math.floor(boostersLeft * weights[rank] / weightsSum) : 0;
+            let weightIndex = 0;
+            for (let rank = this.rankAlreadyAssigned + 1; rank <= this.players; rank++) {
+                let add = Math.floor(this.boostersLeft * weights[weightIndex] / weightsSum);
                 let alreadyAssigned = this.prices[rank] ? this.prices[rank].boosters : 0;
-                this.prices[rank] = {rank: rank + rankAlreadyAssigned, boosters: alreadyAssigned + add};
-                boostersLeft -= add;
+                this.prices[rank] = {rank: rank + this.rankAlreadyAssigned, boosters: alreadyAssigned + add};
+                this.boostersLeft -= add;
+                weightIndex++;
             }
 
             // Distribute remaining boosters (due to rounding)
-            if (boostersLeft === 0) return;
+            if (this.boostersLeft === 0) return;
 
-            let currentRank = rankAlreadyAssigned + 1;
-            while (boostersLeft > 0) {
+            let currentRank = this.rankAlreadyAssigned + 1;
+            while (this.boostersLeft > 0) {
                 if (currentRank > this.players) {
                     // restart from the first rank after already assigned
-                    currentRank = rankAlreadyAssigned + 1;
+                    currentRank = this.rankAlreadyAssigned + 1;
                 }
                 let alreadyAssigned = this.prices[currentRank] ? this.prices[currentRank].boosters : 0;
                 this.prices[currentRank] = {rank: currentRank, boosters: alreadyAssigned + 1};
-                boostersLeft--;
+                this.boostersLeft--;
                 currentRank++;
             }
         }
